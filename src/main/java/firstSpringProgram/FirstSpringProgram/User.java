@@ -1,7 +1,7 @@
 package firstSpringProgram.FirstSpringProgram;
 
 public class User {
-	private int id;
+	private Integer id;
 	private String name;
 	
 	public User()
