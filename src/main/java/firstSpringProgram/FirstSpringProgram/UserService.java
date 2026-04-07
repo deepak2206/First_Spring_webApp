@@ -1,42 +1,45 @@
 package firstSpringProgram.FirstSpringProgram;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-	List <User> users = new ArrayList<>();
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	public String addUser(User user)
 	{
-		users.add(user);
+		userRepository.save(user);
 		return "User added !";
 	}
 	
 	public List<User> getUsers()
 	{
-		return users;
+		return userRepository.findAll();
 	}
 	
 	public String deleteUser(int id)
 	{
-		boolean removed = users.removeIf(u -> u.getId() == id);
-		return removed ? "User Deleted" : "User not Found";
+		userRepository.deleteById(id);
+		return "User Deleted";
 	}
 	
 	public String updateUser(int id, User updatedUser)
 	{
-		for(User u: users)
+		User existingUser = userRepository.findById(id).orElse(null);
+		if(existingUser == null)
+			return "User not Found";
+		if(updatedUser.getName() != null)
 		{
-			if(u.getId() == id)
-			{
-				u.setName(updatedUser.getName());
-				return "User Updated!";
-			}
-			
+			existingUser.setName(updatedUser.getName());
 		}
-		return "User Not Found";
+		
+		userRepository.save(existingUser);
+		
+		return "User Updated";
 	}
 }
