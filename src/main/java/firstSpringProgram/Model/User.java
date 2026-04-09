@@ -1,7 +1,12 @@
-package firstSpringProgram.FirstSpringProgram;
+package firstSpringProgram.Model;
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -10,6 +15,10 @@ public class User {
 	private Integer id;
 	
 	private String name;
+	
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private List<Job> jobs;
 	
 	public User()
 	{

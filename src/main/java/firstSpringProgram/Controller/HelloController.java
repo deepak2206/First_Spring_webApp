@@ -1,4 +1,4 @@
-package firstSpringProgram.FirstSpringProgram;
+package firstSpringProgram.Controller;
 
 import java.util.List;
 
@@ -11,11 +11,24 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import firstSpringProgram.Model.Applications;
+import firstSpringProgram.Model.Job;
+import firstSpringProgram.Model.User;
+import firstSpringProgram.Service.ApplicationService;
+import firstSpringProgram.Service.JobService;
+import firstSpringProgram.Service.UserService;
+
 @RestController
 public class HelloController {
     
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	JobService jobService;
+	
+	@Autowired
+	ApplicationService applicationService;
 //	List<User> users = new ArrayList<>();
 //    @GetMapping("/hello")
 //    public String sayHello() {
@@ -27,8 +40,9 @@ public class HelloController {
 //        return "Welcome to Spring Boot";
 //    }
 	
-	// Just by adding one service layer we now removed all the actions from here and made this code clean;
-	
+// Just by adding one service layer we now removed all the actions from here and made this code clean;
+
+// Mappings for Users 
 	@PostMapping("/addUser")
 	public String addUser(@RequestBody User user)
 	{
@@ -52,4 +66,34 @@ public class HelloController {
 	{
 		return userService.updateUser(id, user);
 	}
+	
+//Mapping for Jobs
+	
+	@PostMapping("/addJob")
+	public String addJob(@RequestBody Job job)
+	{
+		return jobService.addJob(job);
+	}
+	
+	@GetMapping("/getJob")
+	public List<Job> getJob()
+	{
+		return jobService.getJob();
+	}
+	
+//Mapping for Applications
+	
+	@PostMapping("/applyJob")
+	public Applications applyJob(@RequestBody Applications applications)
+	{
+		return applicationService.applyJob(applications);
+	}
+	
+	@GetMapping("/getApplications")
+	public List<Applications> getApplications()
+	{
+		return applicationService.getApplications();		
+	}
+	
+	
 }
