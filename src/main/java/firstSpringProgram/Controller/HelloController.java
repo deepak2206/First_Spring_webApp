@@ -17,6 +17,7 @@ import firstSpringProgram.Model.User;
 import firstSpringProgram.Service.ApplicationService;
 import firstSpringProgram.Service.JobService;
 import firstSpringProgram.Service.UserService;
+import jakarta.validation.Valid;
 
 @RestController
 public class HelloController {
@@ -44,7 +45,7 @@ public class HelloController {
 
 // Mappings for Users 
 	@PostMapping("/addUser")
-	public String addUser(@RequestBody User user)
+	public String addUser(@Valid @RequestBody User user)
 	{
 		return userService.addUser(user);
 	}
@@ -95,5 +96,12 @@ public class HelloController {
 		return applicationService.getApplications();		
 	}
 	
+//Mapping for login
+	
+	@PostMapping("/Login")
+	public String login(@RequestBody User user)
+	{
+		return userService.login(user);
+	}
 	
 }

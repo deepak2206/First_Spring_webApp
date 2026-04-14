@@ -25,13 +25,13 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	
-	public String deleteUser(int id)
+	public String deleteUser(Integer id)
 	{
 		userRepository.deleteById(id);
 		return "User Deleted";
 	}
 	
-	public String updateUser(int id, User updatedUser)
+	public String updateUser(Integer id, User updatedUser)
 	{
 		User existingUser = userRepository.findById(id).orElse(null);
 		if(existingUser == null)
@@ -44,5 +44,22 @@ public class UserService {
 		userRepository.save(existingUser);
 		
 		return "User Updated";
+	}
+	
+	public String login(User user)
+	{
+		User existingUser = userRepository.findByEmail(user.getEmail());
+		if(existingUser == null)
+		{
+			return "User not found";
+		}
+		if(existingUser.getPassword().equals(user.getPassword()))
+		{
+			return "Login Successfull";
+		}
+		else
+		{
+			return "Invalid Credintials";
+		}
 	}
 }
