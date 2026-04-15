@@ -3,6 +3,7 @@ package firstSpringProgram.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import firstSpringProgram.Model.User;
@@ -12,12 +13,15 @@ import firstSpringProgram.Repository.UserRepository;
 public class UserService {
 	
 	@Autowired
+	BCryptPasswordEncoder encoder;
+	
+	@Autowired
 	UserRepository userRepository;
 	
-	public String addUser(User user)
+	public User addUser(User user)
 	{
-		userRepository.save(user);
-		return "User added !";
+		user.setPassword(encoder.encode(user.getPassword()));
+		return userRepository.save(user);
 	}
 	
 	public List<User> getUsers()
@@ -53,7 +57,7 @@ public class UserService {
 		{
 			return "User not found";
 		}
-		if(existingUser.getPassword().equals(user.getPassword()))
+		if(encoder.matches(user.getPassword(), existingUser.getPassword()))
 		{
 			return "Login Successfull";
 		}

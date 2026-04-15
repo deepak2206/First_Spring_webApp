@@ -44,13 +44,13 @@ public class HelloController {
 // Just by adding one service layer we now removed all the actions from here and made this code clean;
 
 // Mappings for Users 
-	@PostMapping("/addUser")
-	public String addUser(@Valid @RequestBody User user)
+	@PostMapping("/Users")
+	public User addUser(@Valid @RequestBody User user)
 	{
 		return userService.addUser(user);
 	}
 	
-	@GetMapping("/getUsers")
+	@GetMapping("/Users")
 	public List<User> getUsers()
 	{
 		return userService.getUsers();
@@ -70,13 +70,13 @@ public class HelloController {
 	
 //Mapping for Jobs
 	
-	@PostMapping("/addJob")
+	@PostMapping("/Jobs")
 	public String addJob(@RequestBody Job job)
 	{
 		return jobService.addJob(job);
 	}
 	
-	@GetMapping("/getJob")
+	@GetMapping("/Jobs")
 	public List<Job> getJob()
 	{
 		return jobService.getJob();
@@ -98,7 +98,7 @@ public class HelloController {
 	
 //Mapping for login
 	
-	@PostMapping("/Login")
+	@PostMapping("/login")
 	public String login(@RequestBody User user)
 	{
 		return userService.login(user);
